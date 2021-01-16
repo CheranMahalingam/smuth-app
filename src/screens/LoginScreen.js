@@ -9,10 +9,13 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { firebase } from "../config";
+import { useEffect } from "react";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userinfo, setUserInfo] = useState([]);
 
   const onFooterRegisterPress = () => {
     navigation.navigate("Registration");
