@@ -57,7 +57,6 @@ export default function HomeScreen({ navigation }) {
                 style={styles.input}
                 placeholder="Starting Location"
                 placeholderTextColor="#aaaaaa"
-                secureTextEntry={true}
                 onChangeText={(text) => setStarting(text)}
                 value={starting}
                 underlineColorAndroid="transparent"
@@ -67,7 +66,6 @@ export default function HomeScreen({ navigation }) {
                 style={styles.input}
                 placeholder="Destination"
                 placeholderTextColor="#aaaaaa"
-                secureTextEntry={true}
                 onChangeText={(text) => setDestination(text)}
                 value={destination}
                 underlineColorAndroid="transparent"
