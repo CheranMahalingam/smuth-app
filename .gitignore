@@ -1,3 +1,5 @@
+config.js
+
 node_modules/**/*
 .expo/*
 npm-debug.*
@@ -8,6 +10,8 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+
+.vscode/*
 
 # macOS
 .DS_Store
