@@ -11,4 +11,4 @@ const MapListScreens = ({ navigation }) => {
     )
 }
 
-export default MapListScreen
+export default MapScreen
