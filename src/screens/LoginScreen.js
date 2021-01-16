@@ -6,10 +6,13 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  ImageBackground,
+  Dimensions,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { firebase } from "../config";
 import { useEffect } from "react";
+import backgroundImage from "./Android-Background.png";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -39,18 +42,18 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <ImageBackground source={backgroundImage} style={styles.bg}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
-        <Image
-          style={styles.logo}
-          source={require("../../assets/user_placeholder.png")}
-        />
+        <Text style={styles.logo}>
+          smüth
+        </Text>
         <TextInput
           style={styles.input}
-          placeholder="E-mail"
-          placeholderTextColor="#aaaaaa"
+          placeholder="e-mail"
+          placeholderTextColor='white'
           onChangeText={(text) => setEmail(text)}
           value={email}
           underlineColorAndroid="transparent"
@@ -58,8 +61,8 @@ export default function LoginScreen({ navigation }) {
         />
         <TextInput
           style={styles.input}
-          placeholder="Password"
-          placeholderTextColor="#aaaaaa"
+          placeholder="password"
+          placeholderTextColor='white'
           secureTextEntry={true}
           onChangeText={(text) => setPassword(text)}
           value={password}
@@ -67,84 +70,116 @@ export default function LoginScreen({ navigation }) {
           autoCapitalize="none"
         />
         <Text style={styles.resetLink} onPress={() => onFooterForgotPress()}>
-          Forgot Password?
+          forgot password?
         </Text>
         <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
-          <Text style={styles.buttonTitle}>Log in</Text>
+          <Text style={styles.buttonTitle}>log in</Text>
         </TouchableOpacity>
         <View style={styles.footerView}>
           <Text style={styles.footerText}>
-            Don't have an account?{" "}
+            don't have an account?{" "}
             <Text
               onPress={() => onFooterRegisterPress()}
               style={styles.footerLink}
             >
-              Sign up
+              sign up
             </Text>
           </Text>
         </View>
       </KeyboardAwareScrollView>
+      </ImageBackground>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+
+  bg: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    justifyContent: "center",
+    alignItems: "center",
+  },
   container: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: "#556995",
+    
   },
   logo: {
     flex: 1,
-    height: 120,
-    width: 90,
     alignSelf: "center",
-    margin: 30,
+    marginTop: 100,
+    marginBottom: 80,
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 50,
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10
   },
   input: {
     height: 48,
-    borderRadius: 5,
+    borderRadius: 10,
+    borderColor: 'white',
+    borderWidth: 3,
     overflow: "hidden",
-    backgroundColor: "white",
+    // backgroundColor: "white",
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: 30,
-    marginRight: 30,
+    marginLeft: 40,
+    marginRight: 40,
     paddingLeft: 16,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 60,
   },
   button: {
-    backgroundColor: "#3356EB",
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 20,
+    backgroundColor: 'white',
+    marginLeft: 150,
+    marginRight: 150,
+    marginTop: 50,
     height: 48,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 60,
   },
   buttonTitle: {
-    color: "white",
+    color: "black",
     fontSize: 16,
     fontWeight: "bold",
   },
   footerView: {
     flex: 1,
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 10,
   },
   footerText: {
     fontSize: 16,
-    color: "#2e2e2d",
+    color: 'white',
   },
   footerLink: {
-    color: "#3356EB",
+    color: 'white',
     fontWeight: "bold",
     fontSize: 16,
   },
   resetLink: {
-    color: "#3356EB",
+    color: 'white',
     fontWeight: "bold",
     fontSize: 16,
-    marginLeft: 40,
-    marginTop: 10,
+    marginLeft: 50,
+    marginTop: 5,
   },
 });
