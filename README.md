@@ -5,19 +5,19 @@ Poor road conditions, including those caused by potholes, account for more than 
 
 While Google Maps gives users the fastest route to our destination, it doesn't currently take into consideration dents and potholes in the road, which can ultimately cause vehicle damage and accidents. Right now, reporting potholes is also a manual process, which makes it difficult for people to avoid them and for governments to repair them.
 
-## Introducing: smüth
+## Introducing: smüth 🚗〰
 
 smüth is a mobile application whose functionality is two-fold: automating the mapping of potholes and finding the path with the least number of potholes to the user's destination.
 
 Integrating many features of Google Maps, this application can be seamlessly integrated into anyone's drive. We can also see this app being useful for ambulances and individuals discharged from surgery (as any disturbance to this fragile state can become greatly magnified), detecting dangerous routes after natural disasters, and reporting pothole data to governments so they can repair them.
 
-## How We Built It
+## How we built it
 
 UUsing accelerometer data, smüth's algorithm automatically classifies disturbances in the road that cause an acceleration greater than a certain threshold. When a disturbance is detected, its location is relayed to a database. With this information, future routes will be calculated and other disturbances in the area will be identified. This is an automatic process that runs in the background to continuously update the database and provide better routes for all future users.
 
 The mobile app itself is built using React Native, Node, and Google Firebase. We've also utilized Material UI, Figma (wireframe designs), as well as several Google Map API to determine routes and directions from one point to another.
 
-## Challenges Faced
+## Challenges faced
 
 The challenges we faced were mainly from our app's backend. Firstly, we had trouble connecting a phone's accelerometer data to detect potholes. We also faced difficulties with working with Google Map's API, routing, map directions, and plotting pothole locations.
 
@@ -35,7 +35,7 @@ Cheran: This was my first time developing a mobile application and I struggled t
 
 Vivek: First time working with React Native, Firebase and pretty much everything in our stack - so I learned a great deal about integrating maps, routing and designing the UI on mobile interfaces. I also had a great time learning about the authentication process for user sign-in and data collection!
 
-## Technologies Used
+## Technologies used
 
 - React-Native
 - Material UI
@@ -44,7 +44,7 @@ Vivek: First time working with React Native, Firebase and pretty much everything
 - Google Maps Directions API
 - Node.js
 
-## What's Next
+## What's next
 
 We would love to continue refining our pothole detection algorithm based on more research and testing. Currently, our app only is able to locate potholes in a given area, not whether it's on the route from one destination to another, so this is something we would continue looking into.
 
