@@ -53,7 +53,6 @@ export default function MapScreen({ navigation }) {
     let coordinate_data = {
       Longitude: longitude,
       Latitude: latitude,
-      Time: timestamp,
     };
 
     let updates = {};

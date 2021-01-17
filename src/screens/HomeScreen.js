@@ -8,6 +8,8 @@ import {
 import React, { useState } from "react";
 import PastTrip from "./PastTrip";
 import PastTripGeneric from "./PastTripGeneric";
+import * as Location from "expo-location";
+import { firebase } from "../config"
 
 export default function HomeScreen({ navigation }) {
   const [destination, setDestination] = useState("");
