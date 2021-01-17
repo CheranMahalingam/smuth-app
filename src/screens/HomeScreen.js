@@ -1,115 +1,17 @@
 import {
   Text,
   View,
-  Button,
   TextInput,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import React, { useState, useEffect } from "react";
-import * as Location from "expo-location";
-import { Accelerometer } from "expo-sensors";
+import React, { useState } from "react";
 import PastTrip from "./PastTrip";
 import PastTripGeneric from "./PastTripGeneric";
-import { firebase } from "../config";
 
-export default function HomeScreen({navigation}) {
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-  const [longitude, setLongitude] = useState(null);
-  const [latitude, setLatitude] = useState(null);
-  const [timestamp, setTimestamp] = useState(null);
-  const [data, setData] = useState({
-    x: 0,
-    y: 0,
-    z: 0,
-  });
-  const [previousData, setPreviousData] = useState(0);
-  const [subscription, setSubscription] = useState(null);
+export default function HomeScreen({ navigation }) {
   const [destination, setDestination] = useState("");
   const [starting, setStarting] = useState("");
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      let loc = await Location.watchPositionAsync(
-        {
-          timeInterval: 0,
-          accuracy: Location.Accuracy.BestForNavigation,
-        },
-        (loc) => updateHookdata(loc)
-      );
-    })();
-  }, []);
-
-  useEffect(() => {
-    _subscribe();
-    return () => _unsubscribe();
-  }, []);
-
-  const updateHookdata = (loc) => {
-    setLatitude(JSON.stringify(loc.coords.latitude));
-    setLongitude(JSON.stringify(loc.coords.longitude));
-    setTimestamp(JSON.stringify(loc.timestamp));
-  };
-
-  const updateCoordinates = () => {
-    let newCoordinateKey = firebase.database().ref().child("coordinates").push()
-      .key;
-
-    let coordinate_data = {
-      Longitude: longitude,
-      Latitude: latitude,
-      Time: timestamp,
-    };
-
-    let updates = {};
-    updates["coordinates/" + newCoordinateKey] = coordinate_data;
-
-    try {
-      firebase.database().ref().update(updates);
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  const _slow = () => {
-    Accelerometer.setUpdateInterval(1000);
-  };
-
-  const _fast = () => {
-    Accelerometer.setUpdateInterval(100);
-  };
-
-  const _subscribe = () => {
-    setSubscription(
-      Accelerometer.addListener((accelerometerData) => {
-        setData(accelerometerData);
-      })
-    );
-  };
-
-  const _unsubscribe = () => {
-    subscription && subscription.remove();
-    setSubscription(null);
-  };
-
-  if (
-    data.y > 1.5 &&
-    previousData != timestamp &&
-    latitude &&
-    longitude &&
-    timestamp
-  ) {
-    setPreviousData(timestamp);
-    updateCoordinates();
-  }
-  const { x, y, z } = data;
 
   const goToMap = () => {
     navigation.navigate("Map");
@@ -118,23 +20,22 @@ export default function HomeScreen({navigation}) {
   return (
     <View>
       <TextInput
-                style={styles.input}
-                placeholder="starting location"
-                placeholderTextColor="#aaaaaa"
-                onChangeText={(text) => setStarting(text)}
-                value={starting}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
+        style={styles.input}
+        placeholder="starting location"
+        placeholderTextColor="#aaaaaa"
+        onChangeText={(text) => setStarting(text)}
+        value={starting}
+        underlineColorAndroid="transparent"
+        autoCapitalize="none"
       />
       <TextInput
-                style={styles.input}
-                placeholder="destination"
-                placeholderTextColor="#aaaaaa"
-                onChangeText={(text) => setDestination(text)}
-                value={destination}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
-
+        style={styles.input}
+        placeholder="destination"
+        placeholderTextColor="#aaaaaa"
+        onChangeText={(text) => setDestination(text)}
+        value={destination}
+        underlineColorAndroid="transparent"
+        autoCapitalize="none"
       />
 
       <TouchableOpacity onPress={goToMap} style={styles.button}>
