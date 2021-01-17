@@ -9,9 +9,11 @@ import {
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import { Accelerometer } from "expo-sensors";
+import PastTrip from "./PastTrip";
+import PastTripGeneric from "./PastTripGeneric";
 import { firebase } from "../config";
 
-export default function HomeScreen({navigation}) {
+export default function Select({navigation}) {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [longitude, setLongitude] = useState(null);
@@ -109,8 +111,8 @@ export default function HomeScreen({navigation}) {
   }
   const { x, y, z } = data;
 
-  const goToSelect = () => {
-    navigation.navigate("Select");
+  const goToMap = () => {
+    navigation.navigate("Map");
   };
 
   return (
@@ -139,11 +141,35 @@ export default function HomeScreen({navigation}) {
 
       />
 
-      <TouchableOpacity onPress={goToSelect} style={styles.button}>
+      <TouchableOpacity onPress={goToMap} style={styles.button}>
         <Text style={styles.buttonTitle}>go!</Text>
       </TouchableOpacity>
       </View>
 
+      <PastTrip
+        duration={14}
+        arrival={"10:31 AM"}
+        distance={5.5}
+        bump={"minimal"}
+      />
+      <PastTripGeneric
+        duration={15}
+        arrival={"10:32 PM"}
+        distance={5.6}
+        bump={"several"}
+      />
+      <PastTripGeneric
+        duration={20}
+        arrival={"10:37 PM"}
+        distance={5.2}
+        bump={"severe"}
+      />
+      <PastTripGeneric
+        duration={21}
+        arrival={"10:38 PM"}
+        distance={5.9}
+        bump={"severe"}
+      />
     </View>
   );
 }
