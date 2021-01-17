@@ -1,7 +1,6 @@
 import {
   Text,
   View,
-  Button,
   TextInput,
   StyleSheet,
   TouchableOpacity,
@@ -14,7 +13,6 @@ import PastTripGeneric from "./PastTripGeneric";
 import { firebase } from "../config";
 
 export default function App() {
-  const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [latitude, setLatitude] = useState(null);
