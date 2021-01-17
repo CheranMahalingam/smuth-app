@@ -55,7 +55,7 @@ export default function HomeScreen({ navigation }) {
 
       <TextInput
                 style={styles.input}
-                placeholder="Starting Location"
+                placeholder="starting location"
                 placeholderTextColor="#aaaaaa"
                 onChangeText={(text) => setStarting(text)}
                 value={starting}
@@ -64,7 +64,7 @@ export default function HomeScreen({ navigation }) {
       />
       <TextInput
                 style={styles.input}
-                placeholder="Destination"
+                placeholder="destination"
                 placeholderTextColor="#aaaaaa"
                 onChangeText={(text) => setDestination(text)}
                 value={destination}
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: "#556995",
   },
   logo: {
     flex: 1,
