@@ -7,6 +7,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 import RegistrationScreen from "./src/screens/RegistrationScreen";
 import ResetScreen from "./src/screens/ResetScreen";
 import MapScreen from "./src/screens/MapScreen";
+import SelectScreen from "./src/screens/SelectScreen";
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,7 @@ export default function App() {
         <Stack.Screen name="Registration" component={RegistrationScreen} />
         <Stack.Screen name="Reset" component={ResetScreen} />
         <Stack.Screen name="Map" component={MapScreen} />
+        <Stack.Screen name="Select" component={SelectScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
