@@ -118,22 +118,23 @@ export default function App() {
   return (
     <View>
       <TextInput
-        style={styles.input}
-        placeholder="Starting Location"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(text) => setStarting(text)}
-        value={starting}
-        underlineColorAndroid="transparent"
-        autoCapitalize="none"
+                style={styles.input}
+                placeholder="starting location"
+                placeholderTextColor="#aaaaaa"
+                onChangeText={(text) => setStarting(text)}
+                value={starting}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
       />
       <TextInput
-        style={styles.input}
-        placeholder="Destination"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(text) => setDestination(text)}
-        value={destination}
-        underlineColorAndroid="transparent"
-        autoCapitalize="none"
+                style={styles.input}
+                placeholder="destination"
+                placeholderTextColor="#aaaaaa"
+                onChangeText={(text) => setDestination(text)}
+                value={destination}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+
       />
 
       <TouchableOpacity onPress={goToMap} style={styles.button}>
@@ -172,6 +173,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: "#556995",
   },
   logo: {
     flex: 1,

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { firebase } from "../config";
+import backgroundImage from "./Android-Background.png";
 
 export default function RegistrationScreen({ navigation }) {
   const [fullName, setFullname] = useState("");
@@ -38,18 +39,15 @@ export default function RegistrationScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+   
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%" }}
+        style={{ flex: 1, width: "100%"}}
         keyboardShouldPersistTaps="always"
       >
-        <Image
-          style={styles.logo}
-          source={require("../../assets/user_placeholder.png")}
-        />
         <TextInput
-          style={styles.input}
-          placeholder="Full Name"
-          placeholderTextColor="#aaaaaa"
+          style={styles.input1}
+          placeholder="full name"
+          placeholderTextColor="white"
           onChangeText={(text) => setFullname(text)}
           value={fullName}
           underlineColorAndroid="transparent"
@@ -57,8 +55,8 @@ export default function RegistrationScreen({ navigation }) {
         />
         <TextInput
           style={styles.input}
-          placeholder="Email"
-          placeholderTextColor="#aaaaaa"
+          placeholder="email"
+          placeholderTextColor="white"
           onChangeText={(text) => setEmail(text)}
           value={email}
           underlineColorAndroid="transparent"
@@ -66,9 +64,9 @@ export default function RegistrationScreen({ navigation }) {
         />
         <TextInput
           style={styles.input}
-          placeholderTextColor="#aaaaaa"
+          placeholderTextColor="white"
           secureTextEntry
-          placeholder="Password"
+          placeholder="password"
           onChangeText={(text) => setPassword(text)}
           value={password}
           underlineColorAndroid="transparent"
@@ -76,9 +74,9 @@ export default function RegistrationScreen({ navigation }) {
         />
         <TextInput
           style={styles.input}
-          placeholderTextColor="#aaaaaa"
+          placeholderTextColor="white"
           secureTextEntry
-          placeholder="Confirm Password"
+          placeholder="confirm password"
           onChangeText={(text) => setConfirmPassword(text)}
           value={confirmPassword}
           underlineColorAndroid="transparent"
@@ -88,25 +86,34 @@ export default function RegistrationScreen({ navigation }) {
           style={styles.button}
           onPress={() => onRegisterPress()}
         >
-          <Text style={styles.buttonTitle}>Create account</Text>
+          <Text style={styles.buttonTitle}>create account</Text>
         </TouchableOpacity>
         <View style={styles.footerView}>
           <Text style={styles.footerText}>
-            Already got an account?{" "}
+            already got an account?{" "}
             <Text style={styles.footerLink} onPress={() => onFooterLinkPress()}>
-              Login
+              login
             </Text>
           </Text>
         </View>
       </KeyboardAwareScrollView>
+    
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  bg: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    justifyContent: "center",
+    alignItems: "center",
+  },
   container: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: "#556995",
   },
   title: {},
   logo: {
@@ -117,28 +124,71 @@ const styles = StyleSheet.create({
     margin: 30,
   },
   input: {
+    color: 'white',
+    fontWeight: 'bold',
     height: 48,
-    borderRadius: 5,
+    borderRadius: 10,
+    borderColor: 'white',
+    borderWidth: 3,
     overflow: "hidden",
-    backgroundColor: "white",
+    // backgroundColor: "white",
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: 30,
-    marginRight: 30,
+    marginLeft: 40,
+    marginRight: 40,
     paddingLeft: 16,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 60,
   },
-  button: {
-    backgroundColor: "#788eec",
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 20,
+
+  input1: {
+    color: 'white',
+    fontWeight: 'bold',
     height: 48,
-    borderRadius: 5,
+    borderRadius: 10,
+    borderColor: 'white',
+    borderWidth: 3,
+    overflow: "hidden",
+   
+    // backgroundColor: "white",
+    marginTop: 100,
+    marginBottom: 10,
+    marginLeft: 40,
+    marginRight: 40,
+    paddingLeft: 16,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 60,
+  },
+  
+  button: {
+    backgroundColor: 'white',
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 50,
+    height: 48,
+    borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 60,
   },
   buttonTitle: {
-    color: "white",
+    color: "black",
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -149,10 +199,10 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 16,
-    color: "#2e2e2d",
+    color: "white",
   },
   footerLink: {
-    color: "#788eec",
+    color: "white",
     fontWeight: "bold",
     fontSize: 16,
   },

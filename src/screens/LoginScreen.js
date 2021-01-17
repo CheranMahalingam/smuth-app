@@ -64,6 +64,7 @@ export default function LoginScreen({ navigation }) {
           placeholder="password"
           placeholderTextColor='white'
           secureTextEntry={true}
+          selectionColor="white"
           onChangeText={(text) => setPassword(text)}
           value={password}
           underlineColorAndroid="transparent"
@@ -120,6 +121,8 @@ const styles = StyleSheet.create({
     textShadowRadius: 10
   },
   input: {
+    color: 'white',
+    fontWeight: 'bold',
     height: 48,
     borderRadius: 10,
     borderColor: 'white',
@@ -139,10 +142,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 60,
   },
+  
   button: {
     backgroundColor: 'white',
-    marginLeft: 150,
-    marginRight: 150,
+    marginLeft: 40,
+    marginRight: 40,
     marginTop: 50,
     height: 48,
     borderRadius: 10,

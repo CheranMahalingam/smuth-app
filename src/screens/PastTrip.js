@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         marginBottom: 4,
         // paddingLeft: 140,
         // paddingRight: 140,
-        backgroundColor: "#C0C0C0",
+        backgroundColor: "#556995",
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderBottomColor: '#556995',
         borderRadius: 10,
