@@ -1,69 +1,20 @@
-import {
-  Text,
-  View,
-  Button,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
-import React, { useState, useEffect } from "react";
-import * as Location from "expo-location";
-import { Accelerometer } from "expo-sensors";
+import React, {useState} from "react";
+import { Text, View, Button, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import { firebase } from "../config";
+import PastTrip from "./PastTrip"
+import PastTripGeneric from "./PastTripGeneric"
 
-export default function HomeScreen({navigation}) {
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-  const [longitude, setLongitude] = useState(null);
-  const [latitude, setLatitude] = useState(null);
-  const [timestamp, setTimestamp] = useState(null);
-  const [data, setData] = useState({
-    x: 0,
-    y: 0,
-    z: 0,
-  });
-  const [previousData, setPreviousData] = useState(0);
-  const [subscription, setSubscription] = useState(null);
-  const [destination, setDestination] = useState("");
-  const [starting, setStarting] = useState("");
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
 
-      let loc = await Location.watchPositionAsync(
-        {
-          timeInterval: 0,
-          accuracy: Location.Accuracy.BestForNavigation,
-        },
-        (loc) => updateHookdata(loc)
-      );
-    })();
-  }, []);
-
-  useEffect(() => {
-    _subscribe();
-    return () => _unsubscribe();
-  }, []);
-
-  const updateHookdata = (loc) => {
-    setLatitude(JSON.stringify(loc.coords.latitude));
-    setLongitude(JSON.stringify(loc.coords.longitude));
-    setTimestamp(JSON.stringify(loc.timestamp));
-  };
-
+export default function HomeScreen({ navigation }) {
   const updateCoordinates = () => {
     let newCoordinateKey = firebase.database().ref().child("coordinates").push()
       .key;
 
     let coordinate_data = {
-      Longitude: longitude,
-      Latitude: latitude,
-      Time: timestamp,
+      Longitude: 1,
+      Latitude: 1,
+      Time: Math.floor(Date.now() / 1000),
     };
 
     let updates = {};
@@ -76,52 +27,40 @@ export default function HomeScreen({navigation}) {
     }
   };
 
-  const _slow = () => {
-    Accelerometer.setUpdateInterval(1000);
+  const getCoordinates = () => {
+    let coordinateRef = firebase.database().ref("coordinates");
+    let index = 0;
+    coordinateRef.on("value", (snapshot) => {
+      snapshot.forEach((child1) => {
+        child1.forEach((child2) => {
+          if (index % 3 == 2) {
+            console.log(child2.val());
+          }
+          index++;
+        });
+      });
+    });
   };
 
-  const _fast = () => {
-    Accelerometer.setUpdateInterval(100);
-  };
+  const [destination, setDestination] = useState("")
+  const [starting, setStarting] = useState("")
 
-  const _subscribe = () => {
-    setSubscription(
-      Accelerometer.addListener((accelerometerData) => {
-        setData(accelerometerData);
-      })
-    );
-  };
-
-  const _unsubscribe = () => {
-    subscription && subscription.remove();
-    setSubscription(null);
-  };
-
-  if (
-    data.y > 1.5 &&
-    previousData != timestamp &&
-    latitude &&
-    longitude &&
-    timestamp
-  ) {
-    setPreviousData(timestamp);
-    updateCoordinates();
+  const goToMap = () =>{
+    navigation.navigate("Map")
   }
-  const { x, y, z } = data;
+  const goToSelect = () =>{
+    navigation.navigate("Select")
+  }
 
-  const goToSelect = () => {
-    navigation.navigate("Select");
-  };
 
   return (
-    <View>
-      <View style={styles.background}>
-      <Text style={styles.heading}>
+    <View style={styles.view}>
+        <Text style={styles.heading}>
         new trip
       </Text>
       <TextInput
                 style={styles.input}
-                placeholder="starting location"
+                placeholder="Starting Location"
                 placeholderTextColor="white"
                 onChangeText={(text) => setStarting(text)}
                 value={starting}
@@ -130,25 +69,30 @@ export default function HomeScreen({navigation}) {
       />
       <TextInput
                 style={styles.input}
-                placeholder="destination"
+                placeholder="Destination"
                 placeholderTextColor="white"
                 onChangeText={(text) => setDestination(text)}
                 value={destination}
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
-
       />
-
+      
       <TouchableOpacity onPress={goToSelect} style={styles.button}>
-        <Text style={styles.buttonTitle}>go!</Text>
+          <Text style={styles.buttonTitle}>Go!</Text>
       </TouchableOpacity>
-      </View>
 
+     
     </View>
+    
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    
+  },
   heading: {
     marginTop: 10,
     fontSize: 30,
@@ -156,13 +100,11 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
-
-  background: {
+  view:{
     backgroundColor: "#556995",
-  },
-  container: {
-    flex: 1,
-    alignItems: "center",
+    // marginTop: 200,
+    paddingTop: 200,
+    paddingBottom: 300
   },
   logo: {
     flex: 1,
@@ -170,6 +112,18 @@ const styles = StyleSheet.create({
     width: 90,
     alignSelf: "center",
     margin: 30,
+  },
+  
+  button: {
+    backgroundColor: "white",
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 20,
+    marginBottom: 35,
+    height: 48,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
   input: {
     color: 'white',
@@ -193,28 +147,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 60,
   },
-  button: {
-    backgroundColor: "white",
-    marginLeft: 40,
-    marginRight: 40,
-    marginTop: 20,
-    marginBottom: 20,
-    height: 48,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 60,
-  },
   buttonTitle: {
-    color: "black",
-    fontSize: 14,
+    color: "white",
+    fontSize: 16,
     fontWeight: "bold",
+    color:  "#556995",
   },
   footerView: {
     flex: 1,

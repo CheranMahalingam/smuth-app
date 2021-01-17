@@ -17,10 +17,12 @@ export default function PastTrip(props){
                 <Text style={styles.bump}> {props.bump} bumps </Text>
             </Text>
              
-            <Text style={styles.arrival}>{`      `}arrival: {props.arrival}</Text> 
+             
             <Text style={styles.distance}>{spaceBeforeDuration}{props.distance} km
+            <Text>{`\n`}</Text>
+            <Text>{`\n`}</Text>
+            <Text style={styles.arrival}>{`      `}{props.arrival}</Text>
                 
-                <Text>{`\n`}</Text>
             
             </Text> 
             
@@ -59,6 +61,7 @@ const styles = StyleSheet.create({
     arrival:{
         fontSize: 17,
         marginBottom: 10,
+        paddingTop: 10
     },
 
     rec:{
@@ -69,6 +72,7 @@ const styles = StyleSheet.create({
 
     distance:{
         marginBottom: 10,
+        marginTop: 10,
     }
 
 })

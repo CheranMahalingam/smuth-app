@@ -25,6 +25,7 @@ export default function App() {
         <Stack.Screen name="Registration" component={RegistrationScreen} />
         <Stack.Screen name="Reset" component={ResetScreen} />
         <Stack.Screen name="Map" component={MapScreen} />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

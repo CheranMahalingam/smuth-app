@@ -117,62 +117,55 @@ export default function Select({navigation}) {
 
   return (
     <View>
-      <View style={styles.background}>
-      <Text style={styles.heading}>
-        new trip
-      </Text>
-      <TextInput
-                style={styles.input}
-                placeholder="starting location"
-                placeholderTextColor="white"
-                onChangeText={(text) => setStarting(text)}
-                value={starting}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
-      />
-      <TextInput
-                style={styles.input}
-                placeholder="destination"
-                placeholderTextColor="white"
-                onChangeText={(text) => setDestination(text)}
-                value={destination}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
+      
 
-      />
-
-      <TouchableOpacity onPress={goToMap} style={styles.button}>
-        <Text style={styles.buttonTitle}>go!</Text>
-      </TouchableOpacity>
-      </View>
-
-      <PastTrip
-        duration={14}
-        arrival={"10:31 AM"}
-        distance={5.5}
+      <TouchableOpacity onPress={goToMap}>
+      <PastTrip 
+        duration={34}
+        arrival={"via ON-401 E"}
+        distance={40.6}
         bump={"minimal"}
       />
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={goToMap}>
       <PastTripGeneric
-        duration={15}
-        arrival={"10:32 PM"}
-        distance={5.6}
-        bump={"several"}
+        duration={32}
+        arrival={"via ON-7"}
+        distance={31.1}
+        bump={"many"}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={goToMap}>
+      <PastTripGeneric
+        duration={34}
+        arrival={"via Waterloo Regional Rd 24"}
+        distance={40.2}
+        bump={"many"}
       />
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={goToMap}>
       <PastTripGeneric
-        duration={20}
-        arrival={"10:37 PM"}
-        distance={5.2}
+        duration={40}
+        arrival={"via Wellington Rd 32"}
+        distance={47.6}
+        bump={"severe"}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={goToMap}>
+      <PastTripGeneric
+        duration={38}
+        arrival={"via Victoria St N/ON-7"}
+        distance={37.5}
         bump={"severe"}
       />
-      <PastTripGeneric
-        duration={21}
-        arrival={"10:38 PM"}
-        distance={5.9}
-        bump={"severe"}
-      />
+      </TouchableOpacity>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   heading: {
