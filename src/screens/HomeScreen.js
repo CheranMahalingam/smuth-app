@@ -117,10 +117,14 @@ export default function App() {
 
   return (
     <View>
+      <View style={styles.background}>
+      <Text style={styles.heading}>
+        new trip
+      </Text>
       <TextInput
                 style={styles.input}
                 placeholder="starting location"
-                placeholderTextColor="#aaaaaa"
+                placeholderTextColor="white"
                 onChangeText={(text) => setStarting(text)}
                 value={starting}
                 underlineColorAndroid="transparent"
@@ -129,7 +133,7 @@ export default function App() {
       <TextInput
                 style={styles.input}
                 placeholder="destination"
-                placeholderTextColor="#aaaaaa"
+                placeholderTextColor="white"
                 onChangeText={(text) => setDestination(text)}
                 value={destination}
                 underlineColorAndroid="transparent"
@@ -138,42 +142,53 @@ export default function App() {
       />
 
       <TouchableOpacity onPress={goToMap} style={styles.button}>
-        <Text style={styles.buttonTitle}>Go!</Text>
+        <Text style={styles.buttonTitle}>go!</Text>
       </TouchableOpacity>
+      </View>
 
       <PastTrip
         duration={14}
         arrival={"10:31 AM"}
+        distance={5.5}
+        bump={"minimal"}
+      />
+      <PastTripGeneric
+        duration={15}
+        arrival={"10:32 PM"}
+        distance={5.6}
+        bump={"several"}
+      />
+      <PastTripGeneric
+        duration={20}
+        arrival={"10:37 PM"}
         distance={5.2}
-        bump={"minimal"}
-      />
-      <PastTripGeneric
-        duration={21}
-        arrival={"5:38 PM"}
-        distance={12}
-        bump={"minimal"}
-      />
-      <PastTripGeneric
-        duration={13.2}
-        arrival={"9:47 PM"}
-        distance={8}
         bump={"severe"}
       />
       <PastTripGeneric
-        duration={7.8}
-        arrival={"6:15 PM"}
-        distance={13}
-        bump={"many"}
+        duration={21}
+        arrival={"10:38 PM"}
+        distance={5.9}
+        bump={"severe"}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  heading: {
+    marginTop: 10,
+    fontSize: 30,
+    textAlign: "center",
+    color: "white",
+    fontWeight: "bold",
+  },
+
+  background: {
+    backgroundColor: "#556995",
+  },
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#556995",
   },
   logo: {
     flex: 1,
@@ -183,29 +198,49 @@ const styles = StyleSheet.create({
     margin: 30,
   },
   input: {
+    color: 'white',
+    fontColor: 'white',
+    fontWeight: 'bold',
     height: 48,
-    borderRadius: 5,
+    borderRadius: 10,
+    borderColor: 'white',
+    borderWidth: 3,
     overflow: "hidden",
-    backgroundColor: "white",
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 30,
-    marginRight: 30,
+    // backgroundColor: "white",
+    marginTop: 20,
+    // marginBottom: 10,
+    marginLeft: 40,
+    marginRight: 40,
     paddingLeft: 16,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 60,
   },
   button: {
-    backgroundColor: "#556995",
-    marginLeft: 30,
-    marginRight: 30,
+    backgroundColor: "white",
+    marginLeft: 40,
+    marginRight: 40,
     marginTop: 20,
+    marginBottom: 20,
     height: 48,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 60,
   },
   buttonTitle: {
-    color: "white",
-    fontSize: 16,
+    color: "black",
+    fontSize: 14,
     fontWeight: "bold",
   },
   footerView: {
