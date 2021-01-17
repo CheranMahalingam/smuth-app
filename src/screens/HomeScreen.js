@@ -1,20 +1,71 @@
-import React, {useState} from "react";
-import { Text, View, Button, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  Button,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState, useEffect } from "react";
+import * as Location from "expo-location";
+import { Accelerometer } from "expo-sensors";
+import PastTrip from "./PastTrip";
+import PastTripGeneric from "./PastTripGeneric";
 import { firebase } from "../config";
-import PastTrip from "./PastTrip"
-import PastTripGeneric from "./PastTripGeneric"
 
+export default function App() {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [latitude, setLatitude] = useState(null);
+  const [timestamp, setTimestamp] = useState(null);
+  const [data, setData] = useState({
+    x: 0,
+    y: 0,
+    z: 0,
+  });
+  const [previousData, setPreviousData] = useState(0);
+  const [subscription, setSubscription] = useState(null);
+  const [destination, setDestination] = useState("");
+  const [starting, setStarting] = useState("");
 
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
 
-export default function HomeScreen({ navigation }) {
+      let loc = await Location.watchPositionAsync(
+        {
+          timeInterval: 0,
+          accuracy: Location.Accuracy.BestForNavigation,
+        },
+        (loc) => updateHookdata(loc)
+      );
+    })();
+  }, []);
+
+  useEffect(() => {
+    _subscribe();
+    return () => _unsubscribe();
+  }, []);
+
+  const updateHookdata = (loc) => {
+    setLatitude(JSON.stringify(loc.coords.latitude));
+    setLongitude(JSON.stringify(loc.coords.longitude));
+    setTimestamp(JSON.stringify(loc.timestamp));
+  };
+
   const updateCoordinates = () => {
     let newCoordinateKey = firebase.database().ref().child("coordinates").push()
       .key;
 
     let coordinate_data = {
-      Longitude: 1,
-      Latitude: 1,
-      Time: Math.floor(Date.now() / 1000),
+      Longitude: longitude,
+      Latitude: latitude,
+      Time: timestamp,
     };
 
     let updates = {};
@@ -27,64 +78,93 @@ export default function HomeScreen({ navigation }) {
     }
   };
 
-  const getCoordinates = () => {
-    let coordinateRef = firebase.database().ref("coordinates");
-    let index = 0;
-    coordinateRef.on("value", (snapshot) => {
-      snapshot.forEach((child1) => {
-        child1.forEach((child2) => {
-          if (index % 3 == 2) {
-            console.log(child2.val());
-          }
-          index++;
-        });
-      });
-    });
+  const _slow = () => {
+    Accelerometer.setUpdateInterval(1000);
   };
 
-  const [destination, setDestination] = useState("")
-  const [starting, setStarting] = useState("")
+  const _fast = () => {
+    Accelerometer.setUpdateInterval(100);
+  };
 
-  const goToMap = () =>{
-    navigation.navigate("Map")
+  const _subscribe = () => {
+    setSubscription(
+      Accelerometer.addListener((accelerometerData) => {
+        setData(accelerometerData);
+      })
+    );
+  };
+
+  const _unsubscribe = () => {
+    subscription && subscription.remove();
+    setSubscription(null);
+  };
+
+  if (
+    data.y > 1.5 &&
+    previousData != timestamp &&
+    latitude &&
+    longitude &&
+    timestamp
+  ) {
+    setPreviousData(timestamp);
+    updateCoordinates();
   }
+  const { x, y, z } = data;
 
+  const goToMap = () => {
+    navigation.navigate("Map");
+  };
 
   return (
     <View>
+      <TextInput
+        style={styles.input}
+        placeholder="Starting Location"
+        placeholderTextColor="#aaaaaa"
+        onChangeText={(text) => setStarting(text)}
+        value={starting}
+        underlineColorAndroid="transparent"
+        autoCapitalize="none"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Destination"
+        placeholderTextColor="#aaaaaa"
+        onChangeText={(text) => setDestination(text)}
+        value={destination}
+        underlineColorAndroid="transparent"
+        autoCapitalize="none"
+      />
 
-      <TextInput
-                style={styles.input}
-                placeholder="Starting Location"
-                placeholderTextColor="#aaaaaa"
-                onChangeText={(text) => setStarting(text)}
-                value={starting}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
-      />
-      <TextInput
-                style={styles.input}
-                placeholder="Destination"
-                placeholderTextColor="#aaaaaa"
-                onChangeText={(text) => setDestination(text)}
-                value={destination}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
-      />
-      
       <TouchableOpacity onPress={goToMap} style={styles.button}>
-          <Text style={styles.buttonTitle}>Go!</Text>
+        <Text style={styles.buttonTitle}>Go!</Text>
       </TouchableOpacity>
 
-      <PastTrip duration = {14} arrival= {"10:31 AM"} distance={5.2} bump={"minimal"} />
-      <PastTripGeneric duration = {21} arrival= {"5:38 PM"} distance={12} bump={"minimal"} />
-      <PastTripGeneric duration = {13.2} arrival= {"9:47 PM"} distance={8} bump={"severe"} />
-      <PastTripGeneric duration = {7.8} arrival= {"6:15 PM"} distance={13} bump={"many"} />
-      
+      <PastTrip
+        duration={14}
+        arrival={"10:31 AM"}
+        distance={5.2}
+        bump={"minimal"}
+      />
+      <PastTripGeneric
+        duration={21}
+        arrival={"5:38 PM"}
+        distance={12}
+        bump={"minimal"}
+      />
+      <PastTripGeneric
+        duration={13.2}
+        arrival={"9:47 PM"}
+        distance={8}
+        bump={"severe"}
+      />
+      <PastTripGeneric
+        duration={7.8}
+        arrival={"6:15 PM"}
+        distance={13}
+        bump={"many"}
+      />
     </View>
-    
-
-
   );
 }
 
