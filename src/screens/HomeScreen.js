@@ -11,7 +11,8 @@ import * as Location from "expo-location";
 import { Accelerometer } from "expo-sensors";
 import PastTrip from "./PastTrip";
 import PastTripGeneric from "./PastTripGeneric";
-import { firebase } from "../config";
+import * as Location from "expo-location";
+import { firebase } from "../config"
 
 export default function HomeScreen({navigation}) {
   const [location, setLocation] = useState(null);
@@ -35,71 +36,18 @@ export default function HomeScreen({navigation}) {
   
   
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      let loc = await Location.watchPositionAsync(
-        {
-          timeInterval: 0,
-          accuracy: Location.Accuracy.BestForNavigation,
-        },
-        (loc) => updateHookdata(loc)
-      );
-    })();
-  }, []);
-
-  useEffect(() => {
-    _subscribe();
-    return () => _unsubscribe();
-  }, []);
-
-  const updateHookdata = (loc) => {
-    setLatitude(JSON.stringify(loc.coords.latitude));
-    setLongitude(JSON.stringify(loc.coords.longitude));
-    setTimestamp(JSON.stringify(loc.timestamp));
-  };
-
-  const updateCoordinates = () => {
-    let newCoordinateKey = firebase.database().ref().child("coordinates").push()
-      .key;
-
-    let coordinate_data = {
-      Longitude: longitude,
-      Latitude: latitude,
-      Time: timestamp,
-    };
-
-    let updates = {};
-    updates["coordinates/" + newCoordinateKey] = coordinate_data;
-
-    try {
-      firebase.database().ref().update(updates);
-    } catch (error) {
-      alert(error);
-    }
-  };
-  
-
-
-  const _slow = () => {
-    Accelerometer.setUpdateInterval(1000);
-  };
-
-  const _fast = () => {
-    Accelerometer.setUpdateInterval(100);
-  };
-
-  const _subscribe = () => {
-    setSubscription(
-      Accelerometer.addListener((accelerometerData) => {
-        setData(accelerometerData);
-      })
-    );
+  const goToMap = async () => {
+    let geo1 = await Location.geocodeAsync(starting)
+    let geo2 = await Location.geocodeAsync(destination)
+    firebase.database().ref('geo/1').set({
+      longitude: geo1[0].longitude,
+      latitude: geo1[0].latitude,
+    })
+    firebase.database().ref('geo/2').set({
+      longitude: geo2[0].longitude,
+      latitude: geo2[0].latitude,
+    })
+    navigation.navigate("Map");
   };
 
   const _unsubscribe = () => {
