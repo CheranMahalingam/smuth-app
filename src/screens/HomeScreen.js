@@ -1,5 +1,15 @@
-import React, {useState} from "react";
-import { Text, View, Button, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState } from "react";
+import * as Location from "expo-location";
+import { Accelerometer } from "expo-sensors";
+import PastTrip from "./PastTrip";
+import PastTripGeneric from "./PastTripGeneric";
 import { firebase } from "../config";
 import PastTrip from "./PastTrip"
 import PastTripGeneric from "./PastTripGeneric"
@@ -126,11 +136,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   input: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
     height: 48,
     borderRadius: 10,
-    borderColor: 'white',
+    borderColor: "white",
     borderWidth: 3,
     overflow: "hidden",
     // backgroundColor: "white",

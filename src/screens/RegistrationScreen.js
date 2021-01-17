@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Image,
   StyleSheet,
   Text,
   TextInput,
@@ -9,7 +8,7 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { firebase } from "../config";
-import backgroundImage from "./Android-Background.png";
+import backgroundImage from "../../assets/Android-Background.png";
 
 export default function RegistrationScreen({ navigation }) {
   const [fullName, setFullname] = useState("");
@@ -39,9 +38,8 @@ export default function RegistrationScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-   
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%"}}
+        style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
         <TextInput
@@ -97,7 +95,6 @@ export default function RegistrationScreen({ navigation }) {
           </Text>
         </View>
       </KeyboardAwareScrollView>
-    
     </View>
   );
 }
@@ -105,8 +102,8 @@ export default function RegistrationScreen({ navigation }) {
 const styles = StyleSheet.create({
   bg: {
     flex: 1,
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -124,11 +121,11 @@ const styles = StyleSheet.create({
     margin: 30,
   },
   input: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
     height: 48,
     borderRadius: 10,
-    borderColor: 'white',
+    borderColor: "white",
     borderWidth: 3,
     overflow: "hidden",
     // backgroundColor: "white",
@@ -147,14 +144,14 @@ const styles = StyleSheet.create({
   },
 
   input1: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
     height: 48,
     borderRadius: 10,
-    borderColor: 'white',
+    borderColor: "white",
     borderWidth: 3,
     overflow: "hidden",
-   
+
     // backgroundColor: "white",
     marginTop: 100,
     marginBottom: 10,
@@ -169,9 +166,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 60,
   },
-  
+
   button: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     marginLeft: 40,
     marginRight: 40,
     marginTop: 50,
