@@ -8,14 +8,10 @@ import SelectScreen from "./src/screens/SelectScreen";
 import RegistrationScreen from "./src/screens/RegistrationScreen";
 import ResetScreen from "./src/screens/ResetScreen";
 import MapScreen from "./src/screens/MapScreen";
-import { firebase } from "./src/config";
 
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
-
   return (
     <NavigationContainer>
       <Stack.Navigator>
