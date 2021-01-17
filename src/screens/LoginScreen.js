@@ -10,10 +10,13 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { firebase } from "../config";
 import backgroundImage from "../../assets/Android-Background.png";
+import "firebase/functions";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const cool = firebase.functions().httpsCallable("helloWorld");
 
   const onFooterRegisterPress = () => {
     navigation.navigate("Registration");
@@ -27,7 +30,11 @@ export default function LoginScreen({ navigation }) {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((response) => {
+      .then(() => {
+        cool()
+          .then((result) => {
+            console.log(result.data.text);
+          });
         navigation.navigate("Home");
       })
       .catch((error) => {

@@ -13,7 +13,17 @@ export default function HomeScreen({ navigation }) {
   const [destination, setDestination] = useState("");
   const [starting, setStarting] = useState("");
 
-  const goToMap = () => {
+  const goToMap = async () => {
+    let geo1 = await Location.geocodeAsync(starting)
+    let geo2 = await Location.geocodeAsync(destination)
+    firebase.database().ref('geo/1').set({
+      longitude: geo1[0].longitude,
+      latitude: geo1[0].latitude,
+    })
+    firebase.database().ref('geo/2').set({
+      longitude: geo2[0].longitude,
+      latitude: geo2[0].latitude,
+    })
     navigation.navigate("Map");
   };
 
