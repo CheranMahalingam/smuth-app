@@ -1,17 +1,14 @@
 import {
   Text,
   View,
-  Button,
   TextInput,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as Location from "expo-location";
-import { Accelerometer } from "expo-sensors";
 import PastTrip from "./PastTrip";
 import PastTripGeneric from "./PastTripGeneric";
-import * as Location from "expo-location";
 import { firebase } from "../config"
 
 export default function HomeScreen({navigation}) {
@@ -65,18 +62,6 @@ export default function HomeScreen({navigation}) {
     setPreviousData(timestamp);
     updateCoordinates();
   }
-  const { x, y, z } = data;
-  
-
-  const goToMap = async () => {
-      let geo1 = await Location.geocodeAsync(starting)
-      let geo2 = await Location.geocodeAsync(destination)
-      setStartMapLatitude(geo1[0].latitude);
-      setStartMapLongitude(geo1[0].longitude);
-      setEndMapLatitude(geo2[0].latitude);
-      setEndMapLongitude(geo2[0].longitude);
-      navigation.navigate("Map");
-      };
 
   return (
     <View>

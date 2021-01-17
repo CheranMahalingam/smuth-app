@@ -16,8 +16,6 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const cool = firebase.functions().httpsCallable("helloWorld");
-
   const onFooterRegisterPress = () => {
     navigation.navigate("Registration");
   };
@@ -31,10 +29,6 @@ export default function LoginScreen({ navigation }) {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        cool()
-          .then((result) => {
-            console.log(result.data.text);
-          });
         navigation.navigate("Home");
       })
       .catch((error) => {

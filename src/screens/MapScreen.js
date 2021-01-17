@@ -16,6 +16,10 @@ export default function MapScreen({ navigation }) {
   });
   const [previousData, setPreviousData] = useState(0);
   const [subscription, setSubscription] = useState(null);
+  const [lat1, setLat1] = useState(0);
+  const [long1, setLong1] = useState(0);
+  const [lat2, setLat2] = useState(0);
+  const [long2, setLong2] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -36,6 +40,19 @@ export default function MapScreen({ navigation }) {
   }, []);
 
   useEffect(() => {
+    let coordinateRef = firebase.database().ref("geo/1");
+    coordinateRef.on("value", (snapshot) => {
+      setLat1(snapshot.val().latitude);
+      setLong1(snapshot.val().longitude);
+    });
+    let coordinateRef2 = firebase.database().ref("geo/2");
+    coordinateRef2.on("value", (snapshot) => {
+      setLat2(snapshot.val().latitude);
+      setLong2(snapshot.val().longitude);
+    });
+  });
+
+  useEffect(() => {
     _subscribe();
     return () => _unsubscribe();
   }, []);
@@ -49,7 +66,6 @@ export default function MapScreen({ navigation }) {
   const updateCoordinates = () => {
     let newCoordinateKey = firebase.database().ref().child("coordinates").push()
       .key;
-
     let coordinate_data = {
       Longitude: longitude,
       Latitude: latitude,
@@ -99,43 +115,452 @@ export default function MapScreen({ navigation }) {
 
   const coordinates = [
     {
-      latitude: 43.47250338656596,
-      longitude: -80.54485760211877,
+      latitude: lat1,
+      longitude: long1,
     },
     {
-      latitude: 43.533436958129414,
-      longitude: -80.2260946029965
+      latitude: lat2,
+      longitude: long2,
     },
   ];
 
   return (
     <MapView
       initialRegion={{
-        latitude: 43.50250338656596, 
-        longitude: -80.38085760211877,
-        latitudeDelta: 0.50,
-        longitudeDelta: 0.40,
+        latitude: (lat1 + lat2) / 2,
+        longitude: (long1 + long2) / 2,
+        latitudeDelta: 0.5,
+        longitudeDelta: 0.4,
       }}
       style={{ flex: 1 }}
       showsUserLocation
     >
       <MapView.Marker draggable coordinate={coordinates[0]} />
       <MapView.Marker draggable coordinate={coordinates[1]} />
-      <MapView.Marker coordinate={{latitude: 43.50250338656596, longitude: -80.34485760211877,}}
-       image={require('../../assets/pothole.png')}
-       onZoomRadiusChange={{
-        zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
-        radius: [1.0, 1.0, 1.5, 2.0, 3.0, 6.0, 8.0, 1.00, 1.20, 1.50, 1.80, 2.0, 2.5, 2.5]
-     }}
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 - 0.123,
+          longitude: -80.54481 + 0.421,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 - 0.189,
+          longitude: -80.54481 + 0.1328,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 + 0.37612,
+          longitude: -80.54481 + 0.3643,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 + 0.132,
+          longitude: -80.54481 + 0.14329,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 + 0.231,
+          longitude: -80.54481 + 0.098,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 + 0.422,
+          longitude: -80.54481 + 0.1921,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 + 0.0432,
+          longitude: -80.54481 + 0.131,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 + 0.432,
+          longitude: -80.54481 + 0.1321,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 + 0.5221,
+          longitude: -80.54481 + 0.2313,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 + 0.321,
+          longitude: -80.54481 + 0.0123,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 + 0.023,
+          longitude: -80.54481 + 0.1932,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 + 0.05,
+          longitude: -80.54481 + 0.01,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 + 0.15,
+          longitude: -80.54481 + 0.07,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 + 0.3,
+          longitude: -80.54481 + 0.3,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 + 0.02,
+          longitude: -80.54481 + 0.03,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
+      />
+      <MapView.Marker
+        coordinate={{
+          latitude: 43.47397 + 0.01,
+          longitude: -80.54481 + 0.01,
+        }}
+        image={require("../../assets/pothole.png")}
+        onZoomRadiusChange={{
+          zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          radius: [
+            1.0,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            6.0,
+            8.0,
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.0,
+            2.5,
+            2.5,
+          ],
+        }}
       />
       <MapViewDirections
         origin={coordinates[0]}
         destination={coordinates[1]}
         apikey={GOOGLE_MAPS_APIKEY}
-        provideRouteAlternatives = {true}
+        provideRouteAlternatives={true}
         strokeWidth={3}
         strokeColor="red"
-        resetOnChange = {true}
+        resetOnChange={true}
       />
     </MapView>
   );
