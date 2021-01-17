@@ -100,34 +100,43 @@ export default function MapScreen({ navigation }) {
 
   const coordinates = [
     {
-      latitude: 37.79879,
-      longitude: -122.442753,
+      latitude: 43.47250338656596,
+      longitude: -80.54485760211877,
     },
     {
-      latitude: 37.790651,
-      longitude: -122.442497,
+      latitude: 43.533436958129414,
+      longitude: -80.2260946029965
     },
   ];
 
   return (
     <MapView
       initialRegion={{
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+        latitude: 43.50250338656596, 
+        longitude: -80.38085760211877,
+        latitudeDelta: 0.50,
+        longitudeDelta: 0.40,
       }}
       style={{ flex: 1 }}
       showsUserLocation
     >
-      <MapView.Marker coordinate={coordinates[0]} />
-      <MapView.Marker coordinate={coordinates[1]} />
+      <MapView.Marker draggable coordinate={coordinates[0]} />
+      <MapView.Marker draggable coordinate={coordinates[1]} />
+      <MapView.Marker coordinate={{latitude: 43.50250338656596, longitude: -80.34485760211877,}}
+       image={require('../../assets/pothole.png')}
+       onZoomRadiusChange={{
+        zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+        radius: [1.0, 1.0, 1.5, 2.0, 3.0, 6.0, 8.0, 1.00, 1.20, 1.50, 1.80, 2.0, 2.5, 2.5]
+     }}
+      />
       <MapViewDirections
         origin={coordinates[0]}
         destination={coordinates[1]}
         apikey={GOOGLE_MAPS_APIKEY}
+        provideRouteAlternatives = {true}
         strokeWidth={3}
-        strokeColor="black"
+        strokeColor="red"
+        resetOnChange = {true}
       />
     </MapView>
   );
