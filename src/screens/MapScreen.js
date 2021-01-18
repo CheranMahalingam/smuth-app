@@ -39,18 +39,7 @@ export default function MapScreen({ navigation }) {
     })();
   }, []);
 
-  useEffect(() => {
-    let coordinateRef = firebase.database().ref("geo/1");
-    coordinateRef.on("value", (snapshot) => {
-      setLat1(snapshot.val().latitude);
-      setLong1(snapshot.val().longitude);
-    });
-    let coordinateRef2 = firebase.database().ref("geo/2");
-    coordinateRef2.on("value", (snapshot) => {
-      setLat2(snapshot.val().latitude);
-      setLong2(snapshot.val().longitude);
-    });
-  });
+
 
   useEffect(() => {
     _subscribe();
@@ -63,23 +52,7 @@ export default function MapScreen({ navigation }) {
     setTimestamp(JSON.stringify(loc.timestamp));
   };
 
-  const updateCoordinates = () => {
-    let newCoordinateKey = firebase.database().ref().child("coordinates").push()
-      .key;
-    let coordinate_data = {
-      Longitude: longitude,
-      Latitude: latitude,
-    };
 
-    let updates = {};
-    updates["coordinates/" + newCoordinateKey] = coordinate_data;
-
-    try {
-      firebase.database().ref().update(updates);
-    } catch (error) {
-      alert(error);
-    }
-  };
 
   const _slow = () => {
     Accelerometer.setUpdateInterval(1000);
@@ -115,20 +88,20 @@ export default function MapScreen({ navigation }) {
 
   const coordinates = [
     {
-      latitude: lat1,
-      longitude: long1,
+      latitude: 43.4723,
+      longitude: -80.5449,
     },
     {
-      latitude: lat2,
-      longitude: long2,
+      latitude: 43.5327,
+      longitude: -80.2262,
     },
   ];
 
   return (
     <MapView
       initialRegion={{
-        latitude: (lat1 + lat2) / 2,
-        longitude: (long1 + long2) / 2,
+        latitude: 43.5023,
+        longitude: -80.3809,
         latitudeDelta: 0.5,
         longitudeDelta: 0.4,
       }}
@@ -165,8 +138,8 @@ export default function MapScreen({ navigation }) {
       />
       <MapView.Marker
         coordinate={{
-          latitude: 43.47397 - 0.189,
-          longitude: -80.54481 + 0.1328,
+          latitude: 43.47397 - 0.0189,
+          longitude: -80.54481 + 0.01328,
         }}
         image={require("../../assets/pothole.png")}
         onZoomRadiusChange={{
@@ -191,8 +164,8 @@ export default function MapScreen({ navigation }) {
       />
       <MapView.Marker
         coordinate={{
-          latitude: 43.47397 + 0.37612,
-          longitude: -80.54481 + 0.3643,
+          latitude: 43.47397 + 0.037612,
+          longitude: -80.54481 + 0.03643,
         }}
         image={require("../../assets/pothole.png")}
         onZoomRadiusChange={{
@@ -269,7 +242,7 @@ export default function MapScreen({ navigation }) {
       />
       <MapView.Marker
         coordinate={{
-          latitude: 43.47397 + 0.422,
+          latitude: 43.47397 + 0.0422,
           longitude: -80.54481 + 0.1921,
         }}
         image={require("../../assets/pothole.png")}
@@ -296,7 +269,7 @@ export default function MapScreen({ navigation }) {
       <MapView.Marker
         coordinate={{
           latitude: 43.47397 + 0.0432,
-          longitude: -80.54481 + 0.131,
+          longitude: -80.54481 + 0.0131,
         }}
         image={require("../../assets/pothole.png")}
         onZoomRadiusChange={{
@@ -322,7 +295,7 @@ export default function MapScreen({ navigation }) {
       <MapView.Marker
         coordinate={{
           latitude: 43.47397 + 0.432,
-          longitude: -80.54481 + 0.1321,
+          longitude: -80.54481 + 0.01321,
         }}
         image={require("../../assets/pothole.png")}
         onZoomRadiusChange={{
@@ -347,8 +320,8 @@ export default function MapScreen({ navigation }) {
       />
       <MapView.Marker
         coordinate={{
-          latitude: 43.47397 + 0.5221,
-          longitude: -80.54481 + 0.2313,
+          latitude: 43.47397 + 0.05221,
+          longitude: -80.54481 + 0.6313,
         }}
         image={require("../../assets/pothole.png")}
         onZoomRadiusChange={{
@@ -373,7 +346,7 @@ export default function MapScreen({ navigation }) {
       />
       <MapView.Marker
         coordinate={{
-          latitude: 43.47397 + 0.321,
+          latitude: 43.47397 + 0.121,
           longitude: -80.54481 + 0.0123,
         }}
         image={require("../../assets/pothole.png")}

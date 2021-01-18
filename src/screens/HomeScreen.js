@@ -11,8 +11,6 @@ import { Accelerometer } from "expo-sensors";
 import PastTrip from "./PastTrip";
 import PastTripGeneric from "./PastTripGeneric";
 import { firebase } from "../config";
-import PastTrip from "./PastTrip"
-import PastTripGeneric from "./PastTripGeneric"
 
 
 
