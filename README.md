@@ -13,7 +13,7 @@ Integrating many features of Google Maps, this application can be seamlessly int
 
 ## How we built it
 
-UUsing accelerometer data, smüth's algorithm automatically classifies disturbances in the road that cause an acceleration greater than a certain threshold. When a disturbance is detected, its location is relayed to a database. With this information, future routes will be calculated and other disturbances in the area will be identified. This is an automatic process that runs in the background to continuously update the database and provide better routes for all future users.
+Using accelerometer data, smüth's algorithm automatically classifies disturbances in the road that cause an acceleration greater than a certain threshold. When a disturbance is detected, its location is relayed to a database. With this information, future routes will be calculated and other disturbances in the area will be identified. This is an automatic process that runs in the background to continuously update the database and provide better routes for all future users.
 
 The mobile app itself is built using React Native, Node, and Google Firebase. We've also utilized Material UI, Figma (wireframe designs), as well as several Google Map API to determine routes and directions from one point to another.
 
